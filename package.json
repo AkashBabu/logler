@@ -1,45 +1,36 @@
 {
-    "name": "template-lib",
+    "name": "logler",
     "version": "1.0.0",
-    "description": "Template for Nodejs libraries",
-    "main": "dist/index.js",
+    "description": "Most flexible nodejs logging library",
+    "main": "index.js",
     "scripts": {
-        "_test": "mocha --require babel-core/register --require babel-polyfill test/**/*.test.js",
+        "_test": "mocha test/**/*.test.js",
         "_test:exit": "npm run _test -- --exit",
         "test": "export NODE_ENV=test && npm run _test:exit",
         "test:dev": "export NODE_ENV=test &&  npm run _test -- -w",
         "test:grep": "export NODE_ENV=test &&  npm run _test -- -g ",
         "coverage": "export NODE_ENV=test && nyc -- npm run _test:exit",
-        "build": "rimraf dist/ && babel src --out-dir dist",
         "lint": "eslint --config .eslintrc src/index.js",
-        "benchmark": "radargun benchmark/**/*.bench.js",
         "status": "git status"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/AkashBabu/template-lib.git"
+        "url": "git+https://github.com/AkashBabu/logler.git"
     },
     "keywords": [],
-    "author": "001akashbabu@gmail.com",
+    "author": "Akash Babu (001akashbabu@gmail.com)",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/AkashBabu/template-lib/issues"
+        "url": "https://github.com/AkashBabu/logler.git"
     },
-    "homepage": "https://github.com/AkashBabu/template-lib#readme",
+    "homepage": "https://github.com/AkashBabu/logler.git",
     "precommit": [
         "lint",
         "coverage",
-        "build",
-        "benchmark",
         "status"
     ],
     "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-core": "^6.26.3",
-        "babel-eslint": "^8.2.3",
-        "babel-plugin-transform-runtime": "^6.23.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-watch": "^2.0.7",
+        "babel-eslint": "^10.0.1",
         "chai": "^4.1.2",
         "eslint": "^3.19.0",
         "eslint-config-airbnb": "^14.1.0",
@@ -50,14 +41,12 @@
         "eslint-plugin-node": "^6.0.1",
         "eslint-plugin-react": "^6.9.0",
         "mocha": "^5.2.0",
-        "nodemon": "^1.18.3",
+        "moment": "^2.23.0",
         "nyc": "^12.0.2",
         "pre-commit": "^1.2.2",
-        "radargun": "^1.0.1",
-        "rimraf": "^2.6.2"
+        "sinon": "^7.2.2"
     },
     "dependencies": {
-        "babel-polyfill": "^6.26.0",
-        "babel-runtime": "^6.26.0"
+        "colors": "^1.3.3"
     }
 }
