@@ -1,6 +1,6 @@
 {
     "name": "logler",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Most flexible nodejs logging library",
     "main": "index.js",
     "scripts": {
