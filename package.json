@@ -17,7 +17,15 @@
         "type": "git",
         "url": "git+https://github.com/AkashBabu/logler.git"
     },
-    "keywords": [],
+    "keywords": [
+        "logger",
+        "flexible",
+        "async",
+        "requestId",
+        "sentry",
+        "configurable",
+        "logler"
+    ],
     "author": "Akash Babu (001akashbabu@gmail.com)",
     "license": "MIT",
     "bugs": {
