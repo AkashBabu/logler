@@ -113,3 +113,6 @@ Seriously!! I don't care about this section, but if you are very keen then, it's
 - [ ] Test Cases
 - [ ] Documentation
 - [ ] Github pages
+- [ ] Filename token
+- [ ] Line number token
+- [ ] Stack trace token
