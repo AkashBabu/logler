@@ -1,18 +1,15 @@
 require('colors');
+const path = require('path');
 
 // Used merely for type support
 const stream = require('stream'); // eslint-disable-line
 
 
 // Default log format
-const defaultFormat = (tokens, level, msg) => `${tokens.timestamp} <${level.toUpperCase()}> ${msg}`;
+const defaultFormat = ({ timestamp, fileName, lineNum, colNum }, level, msg) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;
 
 // Serializes the given inputs arguments
 const defaultSerializer = (...args) => args.map(a => (a instanceof Object ? JSON.stringify(a) : a)).join(' ');
-
-const defaultTokens = {
-    timestamp: () => new Date().toISOString(),
-};
 
 const defaultLevels = {
     debug : 'cyan',
@@ -88,7 +85,7 @@ class Logler {
         const { format = defaultFormat,
             serializer = defaultSerializer,
             levels = defaultLevels,
-            tokens = defaultTokens,
+            tokens = {},
             lineSeperator = '\r\n',
             writer = defaultWriter,
             withColors = false,
@@ -99,17 +96,22 @@ class Logler {
          * Prints the list of args in the
          * specified format
          *
-         * @param {String} level Log level
-         * @param {String} color Log Color
+         * @param {Object} options Log options
+         * @param {String} options.level log level
+         * @param {String} options.color log color
+         * @param {String} options.mandatoryTokens mandatory tokens
          * @param  {...any} args List of arguments to be printed
          *
          * @returns {String} Serialized log
          *
          * @private
          */
-        function print(level, color, ...args) {
+        function print({ level, color, mandatoryTokens = {} }, ...args) {
             const msg = format(
-                getTokens(tokens, level, ...args),
+                {
+                    ...getTokens(tokens, level, ...args),
+                    ...mandatoryTokens,
+                },
                 level,
                 serializer(...args),
             );
@@ -128,8 +130,23 @@ class Logler {
         // Create functions for every log level
         Object.entries(levels).forEach(([level, logColor]) => {
             this[level] = this[level.toLowerCase()] = (...args) => {
+                // Capture file, line_no and stack trace
+                const err = new Error();
+                // Error.captureStackTrace(this, self[level]);
+                const regex = /\((.*):(\d+):(\d+)\)$/;
+                const match = regex.exec(err.stack.split('\n')[2]);
+
                 // Prints the message to the stream
-                const msg = print(level, logColor, ...args);
+                const msg = print({ level,
+                    color           : logColor,
+                    mandatoryTokens : {
+                        filePath  : match[1],
+                        fileName  : path.parse(match[1]).base,
+                        lineNum   : +match[2],
+                        colNum    : +match[3],
+                        timestamp : new Date().toISOString(),
+                    },
+                }, ...args);
 
                 // Dispatches the log event to the listeners
                 if (onLog) onLog(level, { serializedMsg: msg, args });

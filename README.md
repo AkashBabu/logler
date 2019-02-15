@@ -21,11 +21,11 @@ logger.debug('Hey Logler!')
 **new Logler(opts)**  
 `opts` is an Object with the following properties:  
 
-*Note: That `...args` represent the list of arguments that was passed to the logger*
+*Note: `...args` represent the list of arguments that was passed to the logger*
 
 | Property | Description | Default |
 |:---------|:------------|:--------|
-| format        | Function of the kind `function(tokens, level, msg) : String`| *(tokens, level, msg) => \`${tokens.timestamp} <${level.toUpperCase()}> ${msg}`* |
+| format        | Function of the kind `function(tokens, level, msg) : String`| *({ timestamp, fileName, lineNum, colNum }, level, msg) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;* |
 | tokens        | Map with key as token name and value as a function that resolves to the value of the token. This will be called everytime a log is created, so you may use this option to attach `logId` to every log that is connected to the request via `async hooks` | *{timestamp: new Date().toISOString()}* |
 | levels        | Map of log level(such as debug, info, warn etc) vs color to be used when `withColor` option is `true`. This has been made configurable because many of the applications might not use all the log levels provided by the library, hence this is your point of configuration where you can specify the levels needed by your application | *{debug : 'cyan', info  : 'green', warn  : 'yellow', error : 'red'}* |
 | serializer    | Message serializer can be used to specify your convenience of logs. i.e. you may choose between whether to `JSON.stringify` all objects or stringify all object with indentation or not to stringify at all or the like | *(...args) => args.map(a => (a instanceof Object ? JSON.stringify(a) : a)).join(' ')* |
@@ -116,3 +116,4 @@ Seriously!! I don't care about this section, but if you are very keen then, it's
 - [ ] Filename token
 - [ ] Line number token
 - [ ] Stack trace token
+- [ ] Create first plugin

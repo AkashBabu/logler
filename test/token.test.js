@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const Logler = require('../');
+const path = require('path');
 
 describe('#token Token', () => {
     it('should call every tokens for every log made', () => {
@@ -31,6 +32,20 @@ describe('#token Token', () => {
         logger.debug('test token');
 
         expect(token.calledWith('debug', 'test token')).to.be.true;
+    });
+
+    it('should include mandatory tokens => fileName, lineNum, colNum', () => {
+        const logger = new Logler({
+            format({ filePath, fileName, lineNum, colNum }) {
+                expect(filePath).to.be.eql(__filename);
+                expect(fileName).to.be.eql(path.parse(__filename).base);
+                expect(lineNum).to.be.eql(48);
+                expect(colNum).to.be.eql(16);
+                // expect(stack).not.to.be.undefined;
+            },
+        });
+
+        logger.debug('test token');
     });
 })
 ;
