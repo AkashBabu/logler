@@ -1,4 +1,4 @@
-# logler [![Build Status](https://travis-ci.com/AkashBabu/logler.svg?branch=master)](https://travis-ci.com/AkashBabu/logler) [![Maintainability](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/maintainability)](https://codeclimate.com/github/AkashBabu/logler/maintainability)
+# logler [![Build Status](https://travis-ci.com/AkashBabu/logler.svg?branch=master)](https://travis-ci.com/AkashBabu/logler) [![Maintainability](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/maintainability)](https://codeclimate.com/github/AkashBabu/logler/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/test_coverage)](https://codeclimate.com/github/AkashBabu/logler/test_coverage)
 Bare minimum and fully configurable library needed to build/implement your own logger
 
 ## Introduction
