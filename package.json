@@ -10,6 +10,8 @@
         "test:dev": "export NODE_ENV=test &&  npm run _test -- -w",
         "test:grep": "export NODE_ENV=test &&  npm run _test -- -g ",
         "coverage": "export NODE_ENV=test && nyc -- npm run _test:exit",
+        "lcov": "nyc --reporter=lcov npm test",
+        "report": "nyc report",
         "lint": "eslint --config .eslintrc src/index.js",
         "status": "git status"
     },

@@ -1,10 +1,6 @@
 require('colors');
 const path = require('path');
 
-// Used merely for type support
-const stream = require('stream'); // eslint-disable-line
-
-
 // Default log format
 const defaultFormat = ({ timestamp, fileName, lineNum, colNum }, level, msg) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;
 
@@ -33,6 +29,40 @@ function getTokens(tokens, level, ...args) {
         info[token] = tokens[token](level, ...args); // eslint-disable-line
         return info;
     }, {});
+}
+
+
+// Stack trace format :
+// https://v8.dev/docs/stack-trace-api
+const regex = /\((.*):(\d+):(\d+)\)$/;
+
+/**
+ * Returns the mandatory tokens
+ *
+ * Returns the tokens that has to be
+ * present in the `tokens` object passed
+ * to `format` option
+ *
+ * @typedef {Object} MandatoryTokens
+ * @property {String} timestamp ISO Time stamp
+ * @property {String} filePath Absolute file path
+ * @property {String} fileName File Name
+ * @property {Number} lineNum Line number
+ * @property {Number} colNum Column number
+ *
+ * @returns {MandatoryTokens}
+ */
+function getMandatoryTokens() {
+    // Capture file & line_no
+    const match = regex.exec(new Error().stack.split('\n')[4]);
+
+    return {
+        filePath  : match[1],
+        fileName  : path.parse(match[1]).base,
+        lineNum   : +match[2],
+        colNum    : +match[3],
+        timestamp : new Date().toISOString(),
+    };
 }
 
 /**
@@ -99,29 +129,24 @@ class Logler {
          * @param {Object} options Log options
          * @param {String} options.level log level
          * @param {String} options.color log color
-         * @param {String} options.mandatoryTokens mandatory tokens
          * @param  {...any} args List of arguments to be printed
          *
          * @returns {String} Serialized log
          *
          * @private
          */
-        function print({ level, color, mandatoryTokens = {} }, ...args) {
+        function print({ level, color }, ...args) {
             const msg = format(
                 {
                     ...getTokens(tokens, level, ...args),
-                    ...mandatoryTokens,
+                    ...getMandatoryTokens(),
                 },
                 level,
                 serializer(...args),
             );
 
             const lineMsg = `${msg}${lineSeperator}`;
-            writer(
-                withColors
-                    ? lineMsg[color]
-                    : lineMsg,
-            );
+            writer(withColors ? lineMsg[color] : lineMsg);
 
             return msg;
         }
@@ -130,26 +155,14 @@ class Logler {
         // Create functions for every log level
         Object.entries(levels).forEach(([level, logColor]) => {
             this[level] = this[level.toLowerCase()] = (...args) => {
-                // Capture file, line_no and stack trace
-                const err = new Error();
-                // Error.captureStackTrace(this, self[level]);
-                const regex = /\((.*):(\d+):(\d+)\)$/;
-                const match = regex.exec(err.stack.split('\n')[2]);
-
                 // Prints the message to the stream
-                const msg = print({ level,
-                    color           : logColor,
-                    mandatoryTokens : {
-                        filePath  : match[1],
-                        fileName  : path.parse(match[1]).base,
-                        lineNum   : +match[2],
-                        colNum    : +match[3],
-                        timestamp : new Date().toISOString(),
-                    },
+                const msg = print({
+                    level,
+                    color: logColor,
                 }, ...args);
 
                 // Dispatches the log event to the listeners
-                if (onLog) onLog(level, { serializedMsg: msg, args });
+                onLog && onLog(level, { serializedMsg: msg, args });
 
                 return msg;
             };

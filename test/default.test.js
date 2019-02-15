@@ -52,4 +52,18 @@ describe('#default Default', () => {
 
         process.stdout.write = old;
     });
+    it('should print colored o/p if withColors option is true', () => {
+        let logMsg = ''
+        let wMsg = ''
+
+        const myLogger = new Logler({
+            withColors: true,
+            writer(msg) {
+                wMsg = msg
+            }
+        })
+        
+        logMsg = myLogger.debug('test')
+        expect(wMsg).not.to.be.eql(logMsg)
+    })
 });
