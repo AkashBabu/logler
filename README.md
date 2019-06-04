@@ -110,10 +110,10 @@ If you are overwhelmed with the flexibility please feel free to create plugins a
 Seriously!! I don't care about this section, but if you are very keen then, it's MIT.
 
 ## TODO
+- [x] Filename token
+- [x] Line number token
+- [x] Stack trace token
 - [ ] Test Cases
 - [ ] Documentation
 - [ ] Github pages
-- [ ] Filename token
-- [ ] Line number token
-- [ ] Stack trace token
 - [ ] Create first plugin
