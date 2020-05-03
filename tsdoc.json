@@ -1,0 +1,37 @@
+{
+	"tags":
+	{
+		"allowUnknownTags" : true
+	},
+	"plugins":[
+		 "plugins/markdown"
+		,"/Users/akash.babu/Documents/personal/github/logler/node_modules/tsdoc/template/plugins/TSDoc.js"
+	],
+	"opts":
+	{
+		"template"	:"/Users/akash.babu/Documents/personal/github/logler/node_modules/tsdoc/template",
+		"recurse"	:"true"
+	},
+	"templates" : {
+		"cleverLinks"     : false,
+		"monospaceLinks"  : false
+	},
+	"source":
+	{
+		"includePattern": "(\\.d)?\\.ts$"
+	},
+	"markdown"  : {
+		"parser"   : "gfm",
+		"hardwrap" : true
+	},
+	"tsdoc":{
+		"source"		:"/Users/akash.babu/Documents/personal/github/logler/src/",
+		"destination"	:"/Users/akash.babu/Documents/personal/github/logler/docs",
+		"tutorials"		:"",
+		"systemName"	: "logler",
+		"footer"		: "",
+		"copyright"		: "logler Copyright © 2020 akash.babu.",
+		"outputSourceFiles" : true,
+		"commentsOnly": true
+	}
+}

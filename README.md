@@ -1,45 +1,53 @@
-# logler [![Build Status](https://travis-ci.com/AkashBabu/logler.svg?branch=master)](https://travis-ci.com/AkashBabu/logler) [![Maintainability](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/maintainability)](https://codeclimate.com/github/AkashBabu/logler/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/test_coverage)](https://codeclimate.com/github/AkashBabu/logler/test_coverage)
+# logler [![Build Status](https://travis-ci.com/AkashBabu/logler.svg?branch=master)](https://travis-ci.com/AkashBabu/logler) [![Maintainability](https://api.codeclimate.com/v1/badges/11ea6ce1fac48e5d9a3b/maintainability)](https://codeclimate.com/github/AkashBabu/logler/maintainability) [![Coverage Status](https://coveralls.io/repos/github/AkashBabu/logler/badge.svg?branch=master)](https://coveralls.io/github/AkashBabu/logler?branch=master)
 Bare minimum and fully configurable library needed to build/implement your own logger
 
 ## Introduction
-You can configure right from serializer to message format!!! In other words you may write very simple plugins and have a logger of your own kind. Serves the flexibility of creating a logger for any purpose including logging into DB or writing to a stream etc
+
+You can configure right from serializer to log format!!! In other words you may write very simple plugins and have a logger of your own kind. Serves the flexibility of creating a logger for any purpose including logging into DB or writing to a stream etc
+
+This library was built to solve the following problems:
+* Should be able to accomodate a unique ID for all the logs related to a request (even though asynchronous)
+* Should provide integrations to log trackers like Sentry etc.
+* Should be able to use any writers (could be stream based or DB based or a simple console logs)
+* Should be flexible enough for writing logs in any format
+* Should print colorful logs, such that it is really easy during development
+* Should allow printing of objects as well (without using JSON.stringify 🎉)
+* Should print fileName, lineNo & colNo so that debugging is a piece of cake
+* Last but not the least, it should be flexible enough to accomodate different needs!!!
+
+Note: *If the above wins are NOT what you are looking for then please try other libraries like [log4js](https://www.npmjs.com/package/log4js), [pino](https://www.npmjs.com/package/pino), [winston](https://www.npmjs.com/package/winston) etc.*
 
 ## Installation
-> npm install logler --save-prod
+> npm i logler -S
 
 ## Usage (Simple)
 ```js
+import Logler from 'logler'
+
 const logger = new Logler()
+logger.trace('Hey Logler!')
 logger.debug('Hey Logler!')
+logger.info('Hey Logler!')
+logger.log('Hey Logler!')
+logger.warn('Hey Logler!')
+logger.error('Hey Logler!')
+logger.fatal('Hey Logler!')
 // => 2019-01-12T18:34:51.512Z <DEBUG> Hey Logler!
 // That's just not it! Trust me there is a lots more 
 // you can do with this library, 
 // please continue reading...
 ```
 
-## Constructor
-**new Logler(opts)**  
-`opts` is an Object with the following properties:  
-
-*Note: `...args` represent the list of arguments that was passed to the logger*
-
-| Property | Description | Default |
-|:---------|:------------|:--------|
-| format        | Function of the kind `function(tokens, level, msg) : String`| *({ timestamp, fileName, lineNum, colNum }, level, msg) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;* |
-| tokens        | Map with key as token name and value as a function that resolves to the value of the token. This will be called everytime a log is created, so you may use this option to attach `logId` to every log that is connected to the request via `async hooks` | *{timestamp: new Date().toISOString()}* |
-| levels        | Map of log level(such as debug, info, warn etc) vs color to be used when `withColor` option is `true`. This has been made configurable because many of the applications might not use all the log levels provided by the library, hence this is your point of configuration where you can specify the levels needed by your application | *{debug : 'cyan', info  : 'green', warn  : 'yellow', error : 'red'}* |
-| serializer    | Message serializer can be used to specify your convenience of logs. i.e. you may choose between whether to `JSON.stringify` all objects or stringify all object with indentation or not to stringify at all or the like | *(...args) => args.map(a => (a instanceof Object ? JSON.stringify(a) : a)).join(' ')* |
-| lineSeperator | Characters to be used to seperate the lines. | *\r\n* |
-| onLog         | On Log event handler function. Function signature should be of the kind `function(level, { serializedMsg, args })` | *undefined* |
-| writer        | Function that might be of interest to those who are interested in logging the output to DB or write to a stream or the like | *(msg) => process.stdout.write(msg)* |
-| withColors    | Boolean. If true, then the output string will be associated with color properties according to the log level | *false* |
-
+## API Documentation:
+For API Docs visit [this page](typings/README.md)
 
 
 ## Create a new plugin
 Configure all the required options and export the same. So that when these options are used in the library then Logger would be according to your configuration and hence called plugin!
 
 #### Sample (with HTTP Request Id integration)
+
+Please note that all the options are optional, so you can configure only the necessary fields
 ```js
 // plugin.js
 const als = require('async-local-storage')
@@ -89,17 +97,13 @@ You can hook custom logic to the logger as shown below
 #### Sample (for sentry integration on every error log)
 ```js
 const logger = new Logler({
-    onLog: (level, {serializedMsg}) => {
+    onLog: (level, {msg}) => {
         if(level === 'error') {
-            require('fs').createWriteStream('./error.log', {flag: 'a'}).write(serializedMsg)
+            require('fs').createWriteStream('./error.log', {flag: 'a'}).write(msg)
         }
     }
 })
 ```
-
-## Other Features
-
-* All the log levels are also lower cased and hence if you provide a log level as 'Debug', it can be accessed via both logger.debug and logger.Debug.
 
 
 ## Contributions
@@ -113,7 +117,7 @@ Seriously!! I don't care about this section, but if you are very keen then, it's
 - [x] Filename token
 - [x] Line number token
 - [x] Stack trace token
-- [ ] Test Cases
-- [ ] Documentation
+- [x] Test Cases
+- [ ] Improve Documentation
+- [ ] Improve test coverage
 - [ ] Github pages
-- [ ] Create first plugin
