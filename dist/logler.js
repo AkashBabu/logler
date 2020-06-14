@@ -92,7 +92,7 @@ class Logler {
         this.print("fatal", ...args);
     }
     print(level, ...args) {
-        const msg = this.options.formatter(Object.assign(Object.assign({}, utils.getTokens(this.options.tokens, level, ...args)), utils.getMandatoryTokens()), level, this.options.serializer(...args));
+        const msg = this.options.formatter(Object.assign(Object.assign({}, utils.getResolvedTokens(this.options.tokens, level, ...args)), utils.getMandatoryTokens()), level, this.options.serializer(...args));
         const lineMsg = `${msg}${this.options.lineSeperator}`;
         this.options.writer(level, this.options.colorLogs ? lineMsg[utils.getColor(level)] : lineMsg);
         // Dispatches the log event to the listeners

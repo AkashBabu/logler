@@ -18,4 +18,4 @@
 
 • **msg**: *string*
 
-Defined in interface.ts:47
+Defined in interface.ts:49

@@ -1,3 +1,9 @@
+# v1.1.0
+* adds type support for custom tokens
+
+# v1.0.1
+* minor changes
+
 # v1.0.0
 * Rewrote the library in typescript
 * Removes support for different logging methods, instead added robust methods -> trace, debug, info, log, warn, error & fatal

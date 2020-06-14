@@ -4,9 +4,11 @@ interface ITokens {
   [K: string]: (level: ILevel, ...args: any[]) => string;
 }
 
-export type IGetTokens = (tokens: ITokens, level: ILevel, ...args: any[]) => {
-  [token: string]: string;
-};
+interface IResolvedTokens {
+  [token: string]: string | number;
+}
+
+export type IGetResolvedTokens = (tokens: ITokens, level: ILevel, ...args: any[]) => IResolvedTokens;
 
 export type IGetColor = (level: ILevel) => string;
 
@@ -31,7 +33,7 @@ export type IGetMandatoryTokens = () => IMandatoryTokens;
 
 export type IGetLogLevelValue = (level: ILevel) => number;
 
-export type IFormatter = (mandatoryTokens: IMandatoryTokens, level: ILevel, msg: string) => string;
+export type IFormatter = (mandatoryTokens: IMandatoryTokens & IResolvedTokens, level: ILevel, msg: string) => string;
 
 export type ISerializer = (...args: any[]) => string;
 

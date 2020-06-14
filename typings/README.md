@@ -13,6 +13,7 @@
 * [IMandatoryTokens](interfaces/imandatorytokens.md)
 * [IOnLogInfo](interfaces/ionloginfo.md)
 * [IOptions](interfaces/ioptions.md)
+* [IResolvedTokens](interfaces/iresolvedtokens.md)
 * [ITokens](interfaces/itokens.md)
 
 ### Type aliases
@@ -21,7 +22,7 @@
 * [IGetColor](README.md#igetcolor)
 * [IGetLogLevelValue](README.md#igetloglevelvalue)
 * [IGetMandatoryTokens](README.md#igetmandatorytokens)
-* [IGetTokens](README.md#igettokens)
+* [IGetResolvedTokens](README.md#igetresolvedtokens)
 * [ILevel](README.md#ilevel)
 * [ILogger](README.md#ilogger)
 * [ILogler](README.md#ilogler)
@@ -38,7 +39,7 @@
 ### Functions
 
 * [formatter](README.md#const-formatter)
-* [getTokens](README.md#const-gettokens)
+* [getResolvedTokens](README.md#const-getresolvedtokens)
 * [serializer](README.md#const-serializer)
 * [writer](README.md#const-writer)
 
@@ -48,17 +49,17 @@
 
 Ƭ **IFormatter**: *function*
 
-Defined in interface.ts:34
+Defined in interface.ts:36
 
 #### Type declaration:
 
-▸ (`mandatoryTokens`: [IMandatoryTokens](interfaces/imandatorytokens.md), `level`: [ILevel](README.md#ilevel), `msg`: string): *string*
+▸ (`mandatoryTokens`: [IMandatoryTokens](interfaces/imandatorytokens.md) & [IResolvedTokens](interfaces/iresolvedtokens.md), `level`: [ILevel](README.md#ilevel), `msg`: string): *string*
 
 **Parameters:**
 
 Name | Type |
 ------ | ------ |
-`mandatoryTokens` | [IMandatoryTokens](interfaces/imandatorytokens.md) |
+`mandatoryTokens` | [IMandatoryTokens](interfaces/imandatorytokens.md) & [IResolvedTokens](interfaces/iresolvedtokens.md) |
 `level` | [ILevel](README.md#ilevel) |
 `msg` | string |
 
@@ -68,7 +69,7 @@ ___
 
 Ƭ **IGetColor**: *function*
 
-Defined in interface.ts:11
+Defined in interface.ts:13
 
 #### Type declaration:
 
@@ -86,7 +87,7 @@ ___
 
 Ƭ **IGetLogLevelValue**: *function*
 
-Defined in interface.ts:32
+Defined in interface.ts:34
 
 #### Type declaration:
 
@@ -104,7 +105,7 @@ ___
 
 Ƭ **IGetMandatoryTokens**: *function*
 
-Defined in interface.ts:30
+Defined in interface.ts:32
 
 #### Type declaration:
 
@@ -112,15 +113,15 @@ Defined in interface.ts:30
 
 ___
 
-###  IGetTokens
+###  IGetResolvedTokens
 
-Ƭ **IGetTokens**: *function*
+Ƭ **IGetResolvedTokens**: *function*
 
-Defined in interface.ts:7
+Defined in interface.ts:11
 
 #### Type declaration:
 
-▸ (`tokens`: [ITokens](interfaces/itokens.md), `level`: [ILevel](README.md#ilevel), ...`args`: any[]): *object*
+▸ (`tokens`: [ITokens](interfaces/itokens.md), `level`: [ILevel](README.md#ilevel), ...`args`: any[]): *[IResolvedTokens](interfaces/iresolvedtokens.md)*
 
 **Parameters:**
 
@@ -129,8 +130,6 @@ Name | Type |
 `tokens` | [ITokens](interfaces/itokens.md) |
 `level` | [ILevel](README.md#ilevel) |
 `...args` | any[] |
-
-* \[ **token**: *string*\]: string
 
 ___
 
@@ -146,7 +145,7 @@ ___
 
 Ƭ **ILogger**: *function*
 
-Defined in interface.ts:40
+Defined in interface.ts:42
 
 #### Type declaration:
 
@@ -164,7 +163,7 @@ ___
 
 Ƭ **ILogler**: *object*
 
-Defined in interface.ts:42
+Defined in interface.ts:44
 
 #### Type declaration:
 
@@ -174,7 +173,7 @@ ___
 
 Ƭ **ISerializer**: *function*
 
-Defined in interface.ts:36
+Defined in interface.ts:38
 
 #### Type declaration:
 
@@ -192,7 +191,7 @@ ___
 
 Ƭ **IWriter**: *function*
 
-Defined in interface.ts:38
+Defined in interface.ts:40
 
 #### Type declaration:
 
@@ -297,7 +296,7 @@ to `format` option
 
 ### `Const` formatter
 
-▸ **formatter**(`__namedParameters`: object, `level`: [ILevel](README.md#ilevel), `msg`: string): *string*
+▸ **formatter**(`__namedParameters`: object, `level`: "trace" | "debug" | "info" | "log" | "warn" | "error" | "fatal", `msg`: string): *string*
 
 Defined in defaults.ts:7
 
@@ -314,7 +313,7 @@ Name | Type |
 `lineNum` | number |
 `timestamp` | string |
 
-▪ **level**: *[ILevel](README.md#ilevel)*
+▪ **level**: *"trace" | "debug" | "info" | "log" | "warn" | "error" | "fatal"*
 
 ▪ **msg**: *string*
 
@@ -322,9 +321,9 @@ Name | Type |
 
 ___
 
-### `Const` getTokens
+### `Const` getResolvedTokens
 
-▸ **getTokens**(`tokens`: [ITokens](interfaces/itokens.md), `level`: "trace" | "debug" | "info" | "log" | "warn" | "error" | "fatal", ...`args`: any[]): *object*
+▸ **getResolvedTokens**(`tokens`: [ITokens](interfaces/itokens.md), `level`: "trace" | "debug" | "info" | "log" | "warn" | "error" | "fatal", ...`args`: any[]): *object*
 
 Defined in utils.ts:23
 

@@ -22,7 +22,7 @@
 
 • **colNum**: *number*
 
-Defined in interface.ts:24
+Defined in interface.ts:26
 
 Column Number
 
@@ -32,7 +32,7 @@ ___
 
 • **fileName**: *string*
 
-Defined in interface.ts:18
+Defined in interface.ts:20
 
 File name
 
@@ -42,7 +42,7 @@ ___
 
 • **filePath**: *string*
 
-Defined in interface.ts:15
+Defined in interface.ts:17
 
 Absolute file path
 
@@ -52,7 +52,7 @@ ___
 
 • **lineNum**: *number*
 
-Defined in interface.ts:21
+Defined in interface.ts:23
 
 line number
 
@@ -62,6 +62,6 @@ ___
 
 • **timestamp**: *string*
 
-Defined in interface.ts:27
+Defined in interface.ts:29
 
 ISO Time stamp

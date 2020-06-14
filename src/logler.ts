@@ -99,7 +99,7 @@ export default class Logler implements ILogler {
     private print(level: ILevel, ...args: any[]) {
         const msg = this.options.formatter(
             {
-                ...utils.getTokens(this.options.tokens, level, ...args),
+                ...utils.getResolvedTokens(this.options.tokens, level, ...args),
                 ...utils.getMandatoryTokens(),
             },
             level,

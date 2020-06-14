@@ -1,9 +1,9 @@
-import { IGetColor, IGetLogLevelValue, IGetMandatoryTokens, IGetTokens } from "./interface";
+import { IGetColor, IGetLogLevelValue, IGetMandatoryTokens, IGetResolvedTokens } from "./interface";
 export declare const getColor: IGetColor;
 /**
  * Get tokens from getters
  */
-export declare const getTokens: IGetTokens;
+export declare const getResolvedTokens: IGetResolvedTokens;
 /**
  * Returns the mandatory tokens
  *

@@ -1,5 +1,5 @@
 import path from "path";
-import { IGetColor, IGetLogLevelValue, IGetMandatoryTokens, IGetTokens, ILevel } from "./interface";
+import { IGetColor, IGetLogLevelValue, IGetMandatoryTokens, IGetResolvedTokens, ILevel } from "./interface";
 
 export const getColor: IGetColor = (() => {
   const colors: {
@@ -20,7 +20,7 @@ export const getColor: IGetColor = (() => {
 /**
  * Get tokens from getters
  */
-export const getTokens: IGetTokens = (tokens, level, ...args) => {
+export const getResolvedTokens: IGetResolvedTokens = (tokens, level, ...args) => {
   return Object.entries(tokens).reduce((info, [token, resolver]) => {
     info[token] = resolver(level, ...args);
     return info;

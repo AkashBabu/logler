@@ -19,7 +19,7 @@ exports.getColor = (() => {
 /**
  * Get tokens from getters
  */
-exports.getTokens = (tokens, level, ...args) => {
+exports.getResolvedTokens = (tokens, level, ...args) => {
     return Object.entries(tokens).reduce((info, [token, resolver]) => {
         info[token] = resolver(level, ...args);
         return info;

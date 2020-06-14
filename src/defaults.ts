@@ -1,10 +1,10 @@
-import { IFormatter, ILevel, IMandatoryTokens, ISerializer, IWriter } from "./interface";
+import { IFormatter, ISerializer, IWriter } from "./interface";
 import { getLogLevelValue } from "./utils";
 
 /**
  * Default log format
  */
-export const formatter: IFormatter = ({ timestamp, fileName, lineNum, colNum }: IMandatoryTokens, level: ILevel, msg: string) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;
+export const formatter: IFormatter = ({ timestamp, fileName, lineNum, colNum }, level, msg) => `${timestamp} [${level.toUpperCase()}] <${fileName}:${lineNum}:${colNum}> ${msg}`;
 
 /**
  * Serializes the given inputs arguments

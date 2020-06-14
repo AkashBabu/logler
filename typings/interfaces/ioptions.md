@@ -24,7 +24,7 @@
 
 • **colorLogs**: *boolean*
 
-Defined in interface.ts:56
+Defined in interface.ts:58
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • **formatter**: *[IFormatter](../README.md#iformatter)*
 
-Defined in interface.ts:51
+Defined in interface.ts:53
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 • **lineSeperator**: *string*
 
-Defined in interface.ts:54
+Defined in interface.ts:56
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **onLog**? : *undefined | function*
 
-Defined in interface.ts:57
+Defined in interface.ts:59
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **serializer**: *[ISerializer](../README.md#iserializer)*
 
-Defined in interface.ts:52
+Defined in interface.ts:54
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 • **tokens**: *[ITokens](itokens.md)*
 
-Defined in interface.ts:53
+Defined in interface.ts:55
 
 ___
 
@@ -72,4 +72,4 @@ ___
 
 • **writer**: *[IWriter](../README.md#iwriter)*
 
-Defined in interface.ts:55
+Defined in interface.ts:57
