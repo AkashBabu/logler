@@ -9,7 +9,7 @@ export const formatter: IFormatter = ({ timestamp, fileName, lineNum, colNum }, 
 /**
  * Serializes the given inputs arguments
  */
-export const serializer: ISerializer = (...args: any[]) => args.map((a) => (a instanceof Object ? JSON.stringify(a) : a)).join(" ");
+export const serializer: ISerializer = (...args: any[]) => args.map((a) => (typeof a === "object" ? JSON.stringify(a) : a)).join(" ");
 
 export const writer: IWriter = (level, msg) => {
   getLogLevelValue(level) < getLogLevelValue("warn")

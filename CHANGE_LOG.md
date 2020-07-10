@@ -1,3 +1,6 @@
+# v1.1.2
+* fixes the error while logging objects
+
 # v1.1.0
 * adds type support for custom tokens
 
