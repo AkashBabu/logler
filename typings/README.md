@@ -254,7 +254,7 @@ ___
   return (level: ILevel) => levelValues[level];
 })()
 
-Defined in utils.ts:62
+Defined in utils.ts:74
 
 Returns the priority for each log level.
 This is especially useful when deciding to print the logs
@@ -268,17 +268,29 @@ ___
 • **getMandatoryTokens**: *[IGetMandatoryTokens](README.md#igetmandatorytokens)* = (() => {
   // Stack trace format :
   // https://v8.dev/docs/stack-trace-api
-  const regex = /\((.*):(\d+):(\d+)\)$/;
+  const regex1 = /\((.*):(\d+):(\d+)\)$/;
+  const regex2 = /(.*):(\d+):(\d+)$/;
 
   return () => {
-    // Capture file & line_no
-    const match = regex.exec((new Error() as any).stack.split("\n")[4]) as RegExpExecArray;
+    const errorOrigin = (new Error() as any).stack.split("\n")[4];
 
-    return {
+    // Capture file & line_no
+    let match = regex1.exec(errorOrigin);
+    if (!match) {
+      match = regex2.exec(errorOrigin);
+    }
+
+    return match ? {
       filePath: match[1],
       fileName: path.parse(match[1]).base,
       lineNum: +match[2],
       colNum: +match[3],
+      timestamp: new Date().toISOString(),
+    } : {
+      filePath: "unknown",
+      fileName: "unknown",
+      lineNum: 0,
+      colNum: 0,
       timestamp: new Date().toISOString(),
     };
   };

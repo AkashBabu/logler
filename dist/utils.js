@@ -35,15 +35,26 @@ exports.getResolvedTokens = (tokens, level, ...args) => {
 exports.getMandatoryTokens = (() => {
     // Stack trace format :
     // https://v8.dev/docs/stack-trace-api
-    const regex = /\((.*):(\d+):(\d+)\)$/;
+    const regex1 = /\((.*):(\d+):(\d+)\)$/;
+    const regex2 = /(.*):(\d+):(\d+)$/;
     return () => {
+        const errorOrigin = new Error().stack.split("\n")[4];
         // Capture file & line_no
-        const match = regex.exec(new Error().stack.split("\n")[4]);
-        return {
+        let match = regex1.exec(errorOrigin);
+        if (!match) {
+            match = regex2.exec(errorOrigin);
+        }
+        return match ? {
             filePath: match[1],
             fileName: path_1.default.parse(match[1]).base,
             lineNum: +match[2],
             colNum: +match[3],
+            timestamp: new Date().toISOString(),
+        } : {
+            filePath: "unknown",
+            fileName: "unknown",
+            lineNum: 0,
+            colNum: 0,
             timestamp: new Date().toISOString(),
         };
     };
