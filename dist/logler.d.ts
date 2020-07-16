@@ -19,36 +19,36 @@ export default class Logler implements ILogler {
      * This can include information that traces a request lifecycle
      * or the like
      */
-    trace(...args: any[]): void;
+    trace: (...args: any[]) => void;
     /**
      * This method can be used to log debug information.
      * It will mostly be useful for a developer
      */
-    debug(...args: any[]): void;
+    debug: (...args: any[]) => void;
     /**
      * This method can be used to log useful information
      * regarding system interaction and behaviour.
      * This log written by this method must be understandable
      * even by a non-developer person
      */
-    info(...args: any[]): void;
+    info: (...args: any[]) => void;
     /**
      * Generic logging method
      */
-    log(...args: any[]): void;
+    log: (...args: any[]) => void;
     /**
      * This method can be used to log warning messages.
      * Logs written by this method would typically include
      * handled exceptions. This is way of informing the log admin
      * regarding a failure, which needs to be fixed.
      */
-    warn(...args: any[]): void;
+    warn: (...args: any[]) => void;
     /**
      * This method can be used to log unhandled exceptions.
      * Logs written by this method must be used for listing
      * down all the errors in the system.
      */
-    error(...args: any[]): void;
+    error: (...args: any[]) => void;
     /**
      * These logs are very similar to error logs, but
      * the only difference lies in the priority that these
@@ -56,6 +56,6 @@ export default class Logler implements ILogler {
      * it needs to be notified to the concerned person for
      * immediate action.
      */
-    fatal(...args: any[]): void;
+    fatal: (...args: any[]) => void;
     private print;
 }

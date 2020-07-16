@@ -37,7 +37,7 @@ export default class Logler implements ILogler {
      * This can include information that traces a request lifecycle
      * or the like
      */
-    public trace(...args: any[]) {
+    public trace = (...args: any[]) => {
         this.print("trace", ...args);
     }
 
@@ -45,7 +45,7 @@ export default class Logler implements ILogler {
      * This method can be used to log debug information.
      * It will mostly be useful for a developer
      */
-    public debug(...args: any[]) {
+    public debug = (...args: any[]) => {
         this.print("debug", ...args);
     }
 
@@ -55,14 +55,14 @@ export default class Logler implements ILogler {
      * This log written by this method must be understandable
      * even by a non-developer person
      */
-    public info(...args: any[]) {
+    public info = (...args: any[]) => {
         this.print("info", ...args);
     }
 
     /**
      * Generic logging method
      */
-    public log(...args: any[]) {
+    public log = (...args: any[]) => {
         this.print("log", ...args);
     }
 
@@ -72,7 +72,7 @@ export default class Logler implements ILogler {
      * handled exceptions. This is way of informing the log admin
      * regarding a failure, which needs to be fixed.
      */
-    public warn(...args: any[]) {
+    public warn = (...args: any[]) => {
         this.print("warn", ...args);
     }
 
@@ -81,7 +81,7 @@ export default class Logler implements ILogler {
      * Logs written by this method must be used for listing
      * down all the errors in the system.
      */
-    public error(...args: any[]) {
+    public error = (...args: any[]) => {
         this.print("error", ...args);
     }
 
@@ -92,11 +92,11 @@ export default class Logler implements ILogler {
      * it needs to be notified to the concerned person for
      * immediate action.
      */
-    public fatal(...args: any[]) {
+    public fatal = (...args: any[]) => {
         this.print("fatal", ...args);
     }
 
-    private print(level: ILevel, ...args: any[]) {
+    private print = (level: ILevel, ...args: any[]) => {
         const msg = this.options.formatter(
             {
                 ...utils.getResolvedTokens(this.options.tokens, level, ...args),
