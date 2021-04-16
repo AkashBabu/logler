@@ -8,7 +8,7 @@ exports.formatter = ({ timestamp, fileName, lineNum, colNum }, level, msg) => `$
 /**
  * Serializes the given inputs arguments
  */
-exports.serializer = (...args) => args.map((a) => (typeof a === "object" ? JSON.stringify(a) : a)).join(" ");
+exports.serializer = (...args) => args.map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a))).join(" ");
 exports.writer = (level, msg) => {
     utils_1.getLogLevelValue(level) < utils_1.getLogLevelValue("warn")
         ? process.stdout.write(msg)
